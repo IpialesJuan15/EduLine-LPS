@@ -49,4 +49,4 @@ EduLine-LPS/
 - Modelo de características: `feature-model/model.xml`
 - Arquitectura de referencia: `architecture/c4-contenedores.png`
 - Configuraciones: `configs/EduSchool.config`, `configs/EduCampus.config`, `configs/EduCorp.config`
-- Informe: `docs/Informe_LPS_EduLine.docx`
+- Informe: `docs/Informe_LPS_EduLine.pdf`
