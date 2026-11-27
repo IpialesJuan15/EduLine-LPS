@@ -1,0 +1,39 @@
+@startuml EduLine-C4-Contenedores
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+LAYOUT_WITH_LEGEND()
+title EduLine - Diagrama de contenedores (C4 nivel 2)
+
+Person(est, "Estudiante")
+Person(doc, "Docente")
+Person(adm, "Administrador")
+
+System_Boundary(edu, "EduLine - plataforma educativa derivable") {
+  Container(web, "Aplicación Web SPA", "React", "VP10 i18n (resource bundles)")
+  Container(mov, "App Móvil", "Android/iOS", "VP8 build flavors (#ifdef)")
+  Container(pan, "Panel de administración", "React")
+  Container(core, "Core API", "Spring Boot - monolito modular", "Usuarios, catálogo, matrícula, contenido, quizzes, reportes básicos, bus de eventos, registro de plugins")
+  Container(vp1, "VP1 Autenticación", "Strategy + DI", "Local | SSO")
+  Container(vp3, "VP3 Evaluación avanzada", "Template Method + plugin", "Assignments, AutoGrading, Proctoring")
+  Container(vp4, "VP4 Comunicación", "Plugins", "Foro | Chat | Video")
+  Container(vp5, "VP5 Analítica e IA", "Observer + plugin", "Learning, Dropout, AITutor")
+  Container(vp6, "VP6 Pagos", "Strategy + Adapter", "Tarjeta | Banco")
+  Container(vp7, "VP7 Gamificación/Certificación", "Observer")
+  Container(vp2, "VP2 Tenant Resolver", "DI + perfiles", "Single | MultiTenant")
+  Container(vp9, "VP9 Integración", "Adapter/Facade", "LTI | ERP")
+  Container(vp11, "VP11 Contenido", "Factory Method", "Video | SCORM")
+  ContainerDb(db, "PostgreSQL", "schema por tenant | BD dedicada")
+  ContainerDb(fs, "Almacén de contenido", "S3 / MinIO")
+}
+System_Ext(idp, "IdP corporativo", "SAML/OIDC")
+System_Ext(pay, "Pasarela de pagos")
+System_Ext(erp, "ERP / RR. HH.")
+System_Ext(lti, "Herramientas LTI")
+System_Ext(vid, "Servicio de video")
+
+Rel(est, web, "usa"); Rel(doc, mov, "usa"); Rel(adm, pan, "configura")
+Rel(web, core, "HTTPS/JSON"); Rel(mov, core, "HTTPS/JSON"); Rel(pan, core, "HTTPS/JSON")
+Rel(core, vp1, "usa"); Rel(core, vp3, "usa"); Rel(core, vp4, "usa"); Rel(core, vp5, "usa")
+Rel(core, vp6, "usa"); Rel(core, vp7, "usa"); Rel(core, vp2, "usa"); Rel(core, vp9, "usa"); Rel(core, vp11, "usa")
+Rel(core, db, "lee/escribe"); Rel(core, fs, "lee/escribe")
+Rel(vp1, idp, "OIDC/SAML"); Rel(vp6, pay, "API"); Rel(vp9, erp, "API"); Rel(vp9, lti, "LTI 1.3"); Rel(vp4, vid, "API")
+@enduml
