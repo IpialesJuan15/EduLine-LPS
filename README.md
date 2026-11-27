@@ -29,3 +29,8 @@ EduLine es una línea de productos software para plataformas de gestión del apr
 ## Estructura del repositorio
 
 ```text
+EduLine-LPS/
+├── feature-model/    Modelo de características (model.xml, diagrama FODA y estadísticas de FeatureIDE)
+├── architecture/     Arquitectura de referencia C4 (niveles 1 y 2)
+├── configs/          Configuraciones válidas de los tres productos (.config)
+└── docs/             Informe final en formato IEEE (informe.pdf) y evidencias
