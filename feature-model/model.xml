@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<graphics key="autolayout" value="true"/>
+		<graphics key="legendautolayout" value="true"/>
+		<graphics key="showconstraints" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="horizontal"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="1"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="EduLine">
+			<and abstract="true" mandatory="true" name="CoreLMS">
+				<feature mandatory="true" name="UserManagement"/>
+				<feature mandatory="true" name="CourseCatalog"/>
+				<feature mandatory="true" name="Enrollment"/>
+				<and mandatory="true" name="ContentDelivery">
+					<feature mandatory="true" name="TextDocs"/>
+					<feature name="VideoLessons"/>
+					<feature name="SCORMPackages"/>
+				</and>
+			</and>
+			<alt abstract="true" mandatory="true" name="Authentication">
+				<feature name="LocalAuth"/>
+				<feature name="SSO"/>
+			</alt>
+			<and mandatory="true" name="Assessment">
+				<feature mandatory="true" name="Quizzes"/>
+				<feature name="Assignments"/>
+				<feature name="AutoGrading"/>
+				<feature name="Proctoring"/>
+			</and>
+			<or abstract="true" name="Communication">
+				<feature name="Forum"/>
+				<feature name="Chat"/>
+				<feature name="VideoConference"/>
+			</or>
+			<and mandatory="true" name="Analytics">
+				<feature mandatory="true" name="BasicReports"/>
+				<feature name="LearningAnalytics"/>
+				<feature name="DropoutPrediction"/>
+			</and>
+			<or abstract="true" name="Gamification">
+				<feature name="Badges"/>
+				<feature name="Leaderboard"/>
+			</or>
+			<feature name="Certification"/>
+			<or abstract="true" name="Payments">
+				<feature name="CardPayment"/>
+				<feature name="BankTransfer"/>
+			</or>
+			<alt abstract="true" mandatory="true" name="Deployment">
+				<feature name="SingleTenant"/>
+				<feature name="MultiTenant"/>
+			</alt>
+			<and abstract="true" name="MobileAccess">
+				<feature name="OfflineMode"/>
+				<feature name="PushNotifications"/>
+			</and>
+			<or abstract="true" name="Integration">
+				<feature name="LTI"/>
+				<feature name="ERPConnector"/>
+			</or>
+			<feature name="AITutor"/>
+			<feature name="Multilanguage"/>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<description>R1: La calificación automática necesita entregas (tareas) que calificar.</description>
+			<imp>
+				<var>AutoGrading</var>
+				<var>Assignments</var>
+			</imp>
+		</rule>
+		<rule>
+			<description>R2: La supervisión de exámenes reutiliza el flujo de video en vivo.</description>
+			<imp>
+				<var>Proctoring</var>
+				<var>VideoConference</var>
+			</imp>
+		</rule>
+		<rule>
+			<description>R3: El modelo predictivo se alimenta de los datos de analítica del aprendizaje.</description>
+			<imp>
+				<var>DropoutPrediction</var>
+				<var>LearningAnalytics</var>
+			</imp>
+		</rule>
+		<rule>
+			<description>R4: El tutor IA personaliza respuestas con el perfil analítico del estudiante.</description>
+			<imp>
+				<var>AITutor</var>
+				<var>LearningAnalytics</var>
+			</imp>
+		</rule>
+		<rule>
+			<description>R5: La integración con el ERP institucional exige identidad corporativa unificada.</description>
+			<imp>
+				<var>ERPConnector</var>
+				<var>SSO</var>
+			</imp>
+		</rule>
+		<rule>
+			<description>R6: La supervisión requiere conexión continua; es incompatible con modo sin conexión.</description>
+			<imp>
+				<var>OfflineMode</var>
+				<not>
+					<var>Proctoring</var>
+				</not>
+			</imp>
+		</rule>
+	</constraints>
+	<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+	<comments/>
+	<featureOrder userDefined="false"/>
+</featureModel>
