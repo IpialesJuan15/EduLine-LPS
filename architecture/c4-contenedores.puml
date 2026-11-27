@@ -35,5 +35,5 @@ Rel(web, core, "HTTPS/JSON"); Rel(mov, core, "HTTPS/JSON"); Rel(pan, core, "HTTP
 Rel(core, vp1, "usa"); Rel(core, vp3, "usa"); Rel(core, vp4, "usa"); Rel(core, vp5, "usa")
 Rel(core, vp6, "usa"); Rel(core, vp7, "usa"); Rel(core, vp2, "usa"); Rel(core, vp9, "usa"); Rel(core, vp11, "usa")
 Rel(core, db, "lee/escribe"); Rel(core, fs, "lee/escribe")
-Rel(vp1, idp, "OIDC/SAML"); Rel(vp6, pay, "API"); Rel(vp9, erp, "API"); Rel(vp9, lti, "LTI 1.3"); Rel(vp4, vid, "API")
+Rel(core, idp, "OIDC/SAML (VP1)"); Rel(core, pay, "API (VP6)"); Rel(core, erp, "API (VP9)"); Rel(core, lti, "LTI 1.3 (VP9)"); Rel(core, vid, "API (VP4)")
 @enduml
