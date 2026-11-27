@@ -11,60 +11,134 @@
 		<graphics key="layoutalgorithm" value="1"/>
 	</properties>
 	<struct>
-		<and abstract="false" mandatory="true" name="EduLine">
-			<and mandatory="true" name="CoreLMS">
-				<feature mandatory="true" name="UserManagement"/>
-				<feature mandatory="true" name="CourseCatalog"/>
-				<feature mandatory="true" name="Enrollment"/>
+		<and abstract="true" mandatory="true" name="EduLine">
+			<description>Raíz de la línea de productos de plataformas de aprendizaje (LMS).</description>
+			<and abstract="true" mandatory="true" name="CoreLMS">
+				<description>Agrupa las funciones académicas que comparten todos los productos.</description>
+				<feature mandatory="true" name="UserManagement">
+					<description>Registro de estudiantes, docentes y administradores con sus roles y permisos.</description>
+				</feature>
+				<feature mandatory="true" name="CourseCatalog">
+					<description>Publicación de la oferta de cursos de cada periodo.</description>
+				</feature>
+				<feature mandatory="true" name="Enrollment">
+					<description>Inscripción de estudiantes en cursos y control de cupos.</description>
+				</feature>
 				<and mandatory="true" name="ContentDelivery">
-					<feature mandatory="true" name="TextDocs"/>
-					<feature name="VideoLessons"/>
-					<feature name="SCORMPackages"/>
+					<description>Servicio que publica y entrega el material de cada curso.</description>
+					<feature mandatory="true" name="TextDocs">
+						<description>Contenido mínimo en PDF y HTML: sílabos, guías y lecturas.</description>
+					</feature>
+					<feature name="VideoLessons">
+						<description>Clases grabadas en video con su reproductor.</description>
+					</feature>
+					<feature name="SCORMPackages">
+						<description>Importación y seguimiento de paquetes SCORM ya existentes.</description>
+					</feature>
 				</and>
 			</and>
-			<alt mandatory="true" name="Authentication">
-				<feature name="LocalAuth"/>
-				<feature name="SSO"/>
+			<alt abstract="true" mandatory="true" name="Authentication">
+				<description>Agrupa los mecanismos de acceso; cada producto elige uno.</description>
+				<feature name="LocalAuth">
+					<description>Usuario y contraseña guardados en la propia plataforma.</description>
+				</feature>
+				<feature name="SSO">
+					<description>Inicio de sesión único con el proveedor de identidad institucional (SAML/OIDC).</description>
+				</feature>
 			</alt>
 			<and mandatory="true" name="Assessment">
-				<feature mandatory="true" name="Quizzes"/>
-				<feature name="Assignments"/>
-				<feature name="AutoGrading"/>
-				<feature name="Proctoring"/>
+				<description>Motor de evaluación del aprendizaje.</description>
+				<feature mandatory="true" name="Quizzes">
+					<description>Cuestionarios de opción múltiple para lecciones y evaluaciones parciales.</description>
+				</feature>
+				<feature name="Assignments">
+					<description>Entrega de tareas y trabajos para su calificación.</description>
+				</feature>
+				<feature name="AutoGrading">
+					<description>Calificación automática de las entregas con rúbricas.</description>
+				</feature>
+				<feature name="Proctoring">
+					<description>Supervisión de exámenes en línea con cámara.</description>
+				</feature>
 			</and>
-			<or name="Communication">
-				<feature name="Forum"/>
-				<feature name="Chat"/>
-				<feature name="VideoConference"/>
+			<or abstract="true" name="Communication">
+				<description>Agrupa los canales de comunicación entre docentes y estudiantes.</description>
+				<feature name="Forum">
+					<description>Foros de discusión por curso.</description>
+				</feature>
+				<feature name="Chat">
+					<description>Mensajería en tiempo real.</description>
+				</feature>
+				<feature name="VideoConference">
+					<description>Clases y tutorías en vivo por video.</description>
+				</feature>
 			</or>
 			<and mandatory="true" name="Analytics">
-				<feature mandatory="true" name="BasicReports"/>
-				<feature name="LearningAnalytics"/>
-				<feature name="DropoutPrediction"/>
+				<description>Módulo de reportes y analítica académica.</description>
+				<feature mandatory="true" name="BasicReports">
+					<description>Listados de notas y asistencia por curso.</description>
+				</feature>
+				<feature name="LearningAnalytics">
+					<description>Indicadores de progreso y participación de cada estudiante.</description>
+				</feature>
+				<feature name="DropoutPrediction">
+					<description>Modelo predictivo que alerta sobre estudiantes en riesgo de abandono.</description>
+				</feature>
 			</and>
-			<or name="Gamification">
-				<feature name="Badges"/>
-				<feature name="Leaderboard"/>
+			<or abstract="true" name="Gamification">
+				<description>Agrupa los mecanismos de motivación basados en juego.</description>
+				<feature name="Badges">
+					<description>Insignias por logros del estudiante.</description>
+				</feature>
+				<feature name="Leaderboard">
+					<description>Clasificación de estudiantes por puntaje.</description>
+				</feature>
 			</or>
-			<feature name="Certification"/>
-			<or name="Payments">
-				<feature name="CardPayment"/>
-				<feature name="BankTransfer"/>
+			<feature name="Certification">
+				<description>Emisión de certificados de aprobación verificables.</description>
+			</feature>
+			<or abstract="true" name="Payments">
+				<description>Agrupa los medios de cobro de cursos.</description>
+				<feature name="CardPayment">
+					<description>Cobro con tarjeta mediante una pasarela de pagos.</description>
+				</feature>
+				<feature name="BankTransfer">
+					<description>Cobro por transferencia bancaria con conciliación.</description>
+				</feature>
 			</or>
-			<alt mandatory="true" name="Deployment">
-				<feature name="SingleTenant"/>
-				<feature name="MultiTenant"/>
+			<alt abstract="true" mandatory="true" name="Deployment">
+				<description>Agrupa el modelo de alojamiento; cada producto elige uno.</description>
+				<feature name="SingleTenant">
+					<description>Instancia y base de datos dedicadas a una sola institución.</description>
+				</feature>
+				<feature name="MultiTenant">
+					<description>SaaS compartido: un esquema de base de datos por institución.</description>
+				</feature>
 			</alt>
 			<and name="MobileAccess">
-				<feature name="OfflineMode"/>
-				<feature name="PushNotifications"/>
+				<description>Aplicación móvil para Android e iOS.</description>
+				<feature name="OfflineMode">
+					<description>Descarga de contenido para estudiar sin conexión.</description>
+				</feature>
+				<feature name="PushNotifications">
+					<description>Avisos push de tareas, notas y mensajes.</description>
+				</feature>
 			</and>
-			<or name="Integration">
-				<feature name="LTI"/>
-				<feature name="ERPConnector"/>
+			<or abstract="true" name="Integration">
+				<description>Agrupa las integraciones con sistemas externos.</description>
+				<feature name="LTI">
+					<description>Herramientas educativas externas integradas con el estándar LTI 1.3.</description>
+				</feature>
+				<feature name="ERPConnector">
+					<description>Sincronización de personal y resultados con el ERP o el sistema de RR. HH.</description>
+				</feature>
 			</or>
-			<feature name="AITutor"/>
-			<feature name="Multilanguage"/>
+			<feature name="AITutor">
+				<description>Asistente con IA que responde dudas según el perfil del estudiante.</description>
+			</feature>
+			<feature name="Multilanguage">
+				<description>Interfaz en varios idiomas mediante archivos de recursos (i18n).</description>
+			</feature>
 		</and>
 	</struct>
 	<constraints>
